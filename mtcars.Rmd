@@ -1,0 +1,80 @@
+MTCARS EDA using R
+
+by Yoihen Elangbam
+
+```{r}
+#Load Required Libraries
+library(ggplot2)
+library(dplyr)
+library(corrplot)
+```
+
+```{r}
+# Load Dataset
+data <- mtcars
+
+```
+
+Preprocessing
+
+```{r}
+head(data)      
+str(data)       # Check the structure of the dataset
+
+```
+
+```{r}
+summary(data) 
+```
+
+```{r}
+# Check for Missing Values
+sum(is.na(data))  
+```
+
+EDA
+
+```{r}
+# Histogram of Miles per Gallon (mpg)
+ggplot(data, aes(x = mpg)) +
+  geom_histogram(binwidth = 2, fill = "magenta", color = "black") +
+  theme_minimal() +
+  labs(title = "Distribution of Miles Per Gallon (mpg)", x = "Miles Per Gallon", y = "Frequency")
+
+# Scatter Plot between Horsepower (hp) and Miles per Gallon (mpg)
+ggplot(data, aes(x = hp, y = mpg)) +
+  geom_point(color = "pink") +
+  theme_minimal() +
+  labs(title = "Scatter Plot: Horsepower vs Miles per Gallon", x = "Horsepower", y = "Miles per Gallon")
+```
+
+```{r}
+# Correlation Matrix for mtcars Dataset
+cor_matrix <- cor(data %>% select_if(is.numeric))
+print(cor_matrix)
+corrplot(cor_matrix, method = "circle",col = colorRampPalette(c("pink", "white", "skyblue"))(200))
+```
+
+```{r}
+# Boxplot of mpg by cylinder (cyl)
+ggplot(mtcars, aes(x = factor(cyl), y = mpg, fill = factor(cyl))) +
+  geom_boxplot() +
+  labs(title = "MPG by Cylinder",
+       x = "Number of Cylinders",
+       y = "Miles per Gallon") +
+  theme_minimal()
+```
+
+```{r}
+# Density plot of mpg
+ggplot(mtcars, aes(x = mpg)) +
+  geom_density(fill = "skyblue", alpha = 0.7) +
+  labs(title = "Density of MPG",
+       x = "Miles per Gallon",
+       y = "Density") +
+  theme_minimal()
+```
+
+```{r}
+
+```
